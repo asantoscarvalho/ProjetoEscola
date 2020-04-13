@@ -47,3 +47,8 @@ Thumbs.db
 Back/ProjetoEscola.Domain/obj/
 Back/ProjetoEscola.Repository/obj/
 Back/ProjetoEscola.Api/obj/
+
+Back/ProjetoEscola.Domain/bin/
+Back/ProjetoEscola.Repository/bin/
+Back/ProjetoEscola.Api/bin/
+

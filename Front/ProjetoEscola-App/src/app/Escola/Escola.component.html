@@ -1,0 +1,152 @@
+<div class="d-flex"> 
+  <div class="form-inline mr-auto">
+    <div class="form-group mb-2">
+      Filtro: <input type="text" 
+      class="form-control mr-2" 
+      placeholder="Buscar"
+      [(ngModel)]="filtroLista"
+      >
+      <button class="btn btn-outline-success">Buscar</button>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-outline-primary" (click)="CadatrarEscola(template)">
+      <i class="fa fa-plus-circle"></i>
+      Nova Escola
+    </button>
+  </div>
+</div>
+  <h3>Filtro: {{filtroLista}}</h3> 
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Nome</th>
+        <th>Endereço</th>
+        <th>Qtd Turmas</th>
+        <th>Lote</th>
+        <th colspan="2">Opções</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="escolas && escolasFiltradas.length">
+      <tr *ngFor="let escola of escolasFiltradas">
+        <td>{{escola.id}}</td>
+        <td>{{escola.nome }}</td>
+        <td>{{escola.endereco}}</td>
+        <td>{{escola.telefone}}</td>
+        <td> 
+          <div class="btn-group">
+            <button class="btn btn-sm btn-success" tooltip="Editar"  (click)="editarEscola(escola,template)" >
+              <i class="fa fa-edit"></i>  
+            </button>
+            <button class="btn btn-sm btn-danger" tooltip="Excluir" (click)="deletarEscola(escola, confirm)"  >
+              <i class="fa fa-eraser"></i>  
+            </button>
+            
+          </div>
+        </td>
+        <td>
+          <a [routerLink]="['/escola',escola.id, 'edit']" tooltip="Edição Detalhada" class="btn btn-sm btn-warning">
+            <i class="fa fa-edit"></i>  
+          </a>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!escolasFiltradas.length">
+      <tr>
+        <td colspan="7" class="text-center"><h3>Nenhuma escola cadastrada!</h3></td>
+      </tr>
+    </tfoot>
+  </table>
+
+
+<div bsModal #template="bs-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+       <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Cadastrar Evento</h4>
+        <button type="button" class="close pull-right" (click)="template.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Nome</label>
+              <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': registerForm.get('nome').errors && registerForm.get('nome').touched}" placeholder="nome" formControlName="nome">
+              <div *ngIf="registerForm.get('nome').hasError('required') && registerForm.get('nome').touched" class="invalid-feedback">
+                 Nome do evento é obrigatório.
+              </div>
+              <div *ngIf="registerForm.get('nome').hasError('minlength') && registerForm.get('nome').touched" class="invalid-feedback">
+                Nome deve ter no mínimo 4 caratcteres.
+             </div>
+             <div *ngIf="registerForm.get('nome').hasError('maxlength') && registerForm.get('nome').touched" class="invalid-feedback">
+              Nome deve ter no máximo 50 caratcteres.
+           </div>
+            </div>
+          </div>  
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label>Endereço</label>
+              <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': registerForm.get('endereco').errors && registerForm.get('endereco').touched}" placeholder="Endereço" formControlName="endereco">
+              <div class="invalid-feedback">
+                 Endereco é obrigatório.
+              </div>
+            </div>
+          </div>  
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label>Telefone</label>
+              <input type="text" class="form-control"
+              [ngClass]="{'is-invalid': registerForm.get('telefone').errors && registerForm.get('telefone').touched}" placeholder="Telefone" formControlName="telefone">
+              <div class="invalid-feedback">
+                 Telefone é obrigatório.
+              </div>
+            </div>
+          </div> 
+        </form>
+      </div>
+      <div class="modal-footer d-flex">
+        <button class="btn btn-secondary" (click)="template.hide()">
+          Fechar
+        </button>
+        <button class="btn btn-primary ml-auto" [disabled]="!registerForm.valid" (click)="salvarAlteracao(template)">
+          Salvar Alterações
+        </button>
+      </div> 
+    </div>
+  </div>
+</div>
+
+<div bsModal #confirm="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+	<div class="modal-dialog modal-sm">
+  		<div class="modal-content">
+    		<div class="modal-header">
+      			<h4 class="modal-title pull-left">
+        			Deletando Escola
+      			</h4>
+      			<button type="button" class="close pull-right" (click)="confirm.hide()" aria-label="Close">
+        			<span aria-hidden="true">&times;</span>
+      			</button>
+    		</div>
+    		<div class="modal-body">
+      			<p>{{bodyDeletar}}</p>
+    		</div>    
+    		<div class="modal-footer btn-group d-flex">      
+      			<button type="button" class="btn btn-outline-primary" (click)="confirm.hide()">
+        			CENCELAR
+      			</button>
+      			<button type="button" class="btn btn-outline-danger" (click)="confirmeDelete(confirm)">
+          			DELETAR
+        		</button>
+    		</div> 
+  		</div>
+	</div>
+</div>
+<br>
+<br>
+<br>

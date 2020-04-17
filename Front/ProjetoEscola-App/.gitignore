@@ -8,7 +8,7 @@
 /bazel-out
 
 # dependencies
-Front/ProjetoEscola-App/node_modules
+/node_modules
 
 # profiling files
 chrome-profiler-events*.json
@@ -44,13 +44,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-Back/ProjetoEscola.Domain/obj/
-Back/ProjetoEscola.Repository/obj/
-Back/ProjetoEscola.Api/obj/
-
-Back/ProjetoEscola.Domain/bin/
-Back/ProjetoEscola.Repository/bin/
-Back/ProjetoEscola.Api/bin/
-
-Back/ProjetoEscola.Api/ProjetoEscola.db-shm
-Back/ProjetoEscola.Api/ProjetoEscola.db-wal
